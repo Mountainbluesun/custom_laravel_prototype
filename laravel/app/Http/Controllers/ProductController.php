@@ -32,7 +32,7 @@ class ProductController extends Controller
         Product::create($validated);
 
         return redirect()->route('products.index')
-            ->with('success', 'Produit créé ✅');
+            ->with('success', 'Product created ✅');
     }
 
     public function edit(Product $product)
@@ -52,7 +52,7 @@ class ProductController extends Controller
         $product->update($validated);
 
         return redirect()->route('products.index')
-            ->with('success', 'Produit mis à jour ✅');
+            ->with('success', 'Product updated ✅');
     }
 
     public function destroy(Product $product)
@@ -60,6 +60,6 @@ class ProductController extends Controller
         $product->delete();
 
         return redirect()->route('products.index')
-            ->with('success', 'Produit supprimé 🗑️');
+            ->with('success', 'Product deleted 🗑️');
     }
 }

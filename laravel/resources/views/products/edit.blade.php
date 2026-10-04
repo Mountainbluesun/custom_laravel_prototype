@@ -2,10 +2,10 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Modifier produit</title>
+    <title>Edit product</title>
 </head>
 <body>
-    <h1>Modifier produit</h1>
+    <h1>Edit product</h1>
 
     @if ($errors->any())
         <ul style="color:red">
@@ -20,28 +20,28 @@
         @method('PUT')
 
         <p>
-            <label>Nom</label><br>
+            <label>Name</label><br>
             <input name="name" value="{{ old('name', $product->name) }}">
         </p>
 
         <p>
-            <label>SKU (optionnel)</label><br>
+            <label>SKU (optional)</label><br>
             <input name="sku" value="{{ old('sku', $product->sku) }}">
         </p>
 
         <p>
-            <label>Quantité</label><br>
+            <label>Quantity</label><br>
             <input type="number" name="quantity" value="{{ old('quantity', $product->quantity) }}">
         </p>
 
         <p>
-            <label>Seuil d’alerte</label><br>
+            <label>Alert threshold</label><br>
             <input type="number" name="alert_threshold" value="{{ old('alert_threshold', $product->alert_threshold) }}">
         </p>
 
-        <button type="submit">Enregistrer</button>
+        <button type="submit">Save</button>
     </form>
 
-    <p><a href="{{ route('products.index') }}">← Retour</a></p>
+    <p><a href="{{ route('products.index') }}">← Back</a></p>
 </body>
 </html>

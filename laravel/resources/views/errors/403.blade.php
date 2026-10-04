@@ -1,11 +1,11 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Accès refusé (403)
+            Access denied (403)
         </h2>
     </x-slot>
     <p class="mt-2 text-sm text-gray-500">
-        Connect as : {{ auth()->user()->email }}
+        Signed in as: {{ auth()->user()->email }}
     </p>
 
     <div class="py-12">
@@ -17,8 +17,8 @@
                 </p>
 
                 <div class="mt-4 flex gap-4">
-                   <a class="underline" href="{{ route('dashboard') }}">← Retour au dashboard</a>
-                   <a class="underline" href="{{ route('products.index') }}">Voir les produits</a>
+                   <a class="underline" href="{{ route('dashboard') }}">← Back to dashboard</a>
+                   <a class="underline" href="{{ route('products.index') }}">View products</a>
                 </div>
 
 

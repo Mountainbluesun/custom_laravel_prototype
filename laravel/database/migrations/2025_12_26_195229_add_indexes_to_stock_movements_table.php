@@ -13,10 +13,10 @@ return new class extends Migration
             $table->index('type');
             $table->index('created_at');
 
-            // très utile pour filtres + tri par date sur un produit
+            // very useful for filtering + sorting by date on a single product
             $table->index(['product_id', 'created_at']);
 
-            // utile si tu filtres souvent type + date
+            // useful when frequently filtering by type + date
             $table->index(['type', 'created_at']);
         });
     }

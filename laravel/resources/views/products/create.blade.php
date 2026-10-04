@@ -2,10 +2,10 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Nouveau produit</title>
+    <title>New product</title>
 </head>
 <body>
-    <h1>Nouveau produit</h1>
+    <h1>New product</h1>
 
     @if ($errors->any())
         <ul style="color:red">
@@ -19,28 +19,28 @@
         @csrf
 
         <p>
-            <label>Nom</label><br>
+            <label>Name</label><br>
             <input name="name" value="{{ old('name') }}">
         </p>
 
         <p>
-            <label>SKU (optionnel)</label><br>
+            <label>SKU (optional)</label><br>
             <input name="sku" value="{{ old('sku') }}">
         </p>
 
         <p>
-            <label>Quantité</label><br>
+            <label>Quantity</label><br>
             <input type="number" name="quantity" value="{{ old('quantity', 0) }}">
         </p>
 
         <p>
-            <label>Seuil d’alerte</label><br>
+            <label>Alert threshold</label><br>
             <input type="number" name="alert_threshold" value="{{ old('alert_threshold', 0) }}">
         </p>
 
-        <button type="submit">Créer</button>
+        <button type="submit">Create</button>
     </form>
 
-    <p><a href="{{ route('products.index') }}">← Retour</a></p>
+    <p><a href="{{ route('products.index') }}">← Back</a></p>
 </body>
 </html>
