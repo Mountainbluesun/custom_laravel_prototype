@@ -22,19 +22,19 @@ class StockMovementController extends Controller
     }
     return DB::transaction(function () use ($data, $product) {
 
-        // Recharger + verrouiller le produit (anti double clic / concurrence)
+        // Reload and lock the product row (prevents double-click / concurrent updates)
         $product = Product::whereKey($product->id)->lockForUpdate()->first();
 
         $qty = (int) $data['quantity'];
 
-        // Check sortie
+        // Reject an outgoing movement larger than the current stock
         if ($data['type'] === 'out' && $qty > $product->quantity) {
             return back()
-                ->withErrors(['quantity' => 'Stock insuffisant pour cette sortie.'])
+                ->withErrors(['quantity' => 'Insufficient stock for this outgoing movement.'])
                 ->withInput();
         }
 
-        // Calcul stock après
+        // Compute the stock after the movement
         $newStock = $data['type'] === 'in'
             ? $product->quantity + $qty
             : $product->quantity - $qty;
@@ -42,7 +42,7 @@ class StockMovementController extends Controller
         // Update stock
         $product->update(['quantity' => $newStock]);
 
-        // Audit
+        // Audit trail
         StockMovement::create([
             'product_id'  => $product->id,
             'user_id'     => auth()->id(),
@@ -53,7 +53,7 @@ class StockMovementController extends Controller
         ]);
 
         return redirect()->route('products.index')
-            ->with('success', 'Mouvement enregistré ✅');
+            ->with('success', 'Movement recorded ✅');
     });
 }
 
@@ -122,7 +122,7 @@ class StockMovementController extends Controller
 
     public function export(Request $request)
     {
-    // mêmes validations que la page global
+    // Same validation as the global page
     $filters = $request->validate([
         'product_id' => ['nullable', 'integer', 'exists:products,id'],
         'type' => ['nullable', 'in:in,out'],
@@ -160,10 +160,10 @@ class StockMovementController extends Controller
     return response()->streamDownload(function () use ($query, $sort, $dir) {
         $out = fopen('php://output', 'w');
 
-        // BOM UTF-8 (utile pour Excel)
+        // UTF-8 BOM (useful for Excel)
         fprintf($out, chr(0xEF).chr(0xBB).chr(0xBF));
 
-        // En-têtes CSV
+        // CSV headers
         fputcsv($out, ['date', 'product', 'type', 'quantity', 'comment']);
 
         $query->orderBy($sort, $dir)
