@@ -1,3 +1,7 @@
+    @php
+    $nextDirDate = (request('sort') === 'created_at' && request('dir') === 'asc') ? 'desc' : 'asc';
+    $nextDirQty  = (request('sort') === 'quantity' && request('dir') === 'asc') ? 'desc' : 'asc';
+@endphp
 <!doctype html>
 <html>
 <head>
@@ -26,31 +30,6 @@
         <option value="out" {{ request('type') === 'out' ? 'selected' : '' }}>Out</option>
     </select>
 
-    @php
-    $nextDirDate = (request('sort') === 'created_at' && request('dir') === 'asc') ? 'desc' : 'asc';
-    $nextDirQty  = (request('sort') === 'quantity' && request('dir') === 'asc') ? 'desc' : 'asc';
-@endphp
-
-<thead>
-<tr>
-    <th>
-        <a href="{{ route('movements.global', array_merge(request()->query(), ['sort' => 'created_at', 'dir' => $nextDirDate])) }}">
-            Date
-        </a>
-    </th>
-
-    <th>Product</th>
-    <th>Type</th>
-    <th>
-        <a href="{{ route('movements.global', array_merge(request()->query(), ['sort' => 'quantity', 'dir' => $nextDirQty])) }}">
-            Quantity
-        </a>
-    </th>
-    <th>Comment</th>
-    <th>Link</th>
-</tr>
-</thead>
-
     <label style="margin-left: 12px;">From:</label>
     <input type="date" name="date_from" value="{{ request('date_from') }}">
 
@@ -64,6 +43,7 @@
     <a href="{{ route('movements.export', request()->query()) }}" style="margin-left: 8px;">
         Export CSV
     </a>
+    @endcan
 
 </form>
 
@@ -73,10 +53,10 @@
     <table border="1" cellpadding="6">
         <thead>
             <tr>
-                <th>Date</th>
+                <th><a href="{{ route('movements.global', array_merge(request()->query(), ['sort' => 'created_at', 'dir' => $nextDirDate])) }}">Date</a></th>
                 <th>Product</th>
                 <th>Type</th>
-                <th>Quantity</th>
+                <th><a href="{{ route('movements.global', array_merge(request()->query(), ['sort' => 'quantity', 'dir' => $nextDirQty])) }}">Quantity</a></th>
                 <th>Stock after</th>
                 <th>User</th>
                 <th>Comment</th>
@@ -111,6 +91,5 @@
 <p style="margin-top: 16px;">
     <a href="{{ route('products.index') }}">← Back to products</a>
 </p>
-@endif
 </body>
 </html>
