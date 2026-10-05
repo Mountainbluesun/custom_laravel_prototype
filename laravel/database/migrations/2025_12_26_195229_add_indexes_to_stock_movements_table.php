@@ -21,14 +21,14 @@ return new class extends Migration
         });
     }
 
-    public function down(): void
+        public function down(): void
     {
         Schema::table('stock_movements', function (Blueprint $table) {
-            $table->dropIndex(['stock_movements_product_id_index']);
-            $table->dropIndex(['stock_movements_type_index']);
-            $table->dropIndex(['stock_movements_created_at_index']);
-            $table->dropIndex(['stock_movements_product_id_created_at_index']);
-            $table->dropIndex(['stock_movements_type_created_at_index']);
+            $table->dropIndex(['product_id']);
+            $table->dropIndex(['type']);
+            $table->dropIndex(['created_at']);
+            $table->dropIndex(['product_id', 'created_at']);
+            $table->dropIndex(['type', 'created_at']);
         });
     }
 };
