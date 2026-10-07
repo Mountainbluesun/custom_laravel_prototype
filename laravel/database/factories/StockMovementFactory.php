@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Product;
 use App\Models\StockMovement;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\User;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\StockMovement>
@@ -16,10 +17,12 @@ class StockMovementFactory extends Factory
     public function definition(): array
     {
         return [
-            'product_id' => Product::inRandomOrder()->value('id'),
-            'type' => $this->faker->randomElement(['in', 'out']),
-            'quantity' => $this->faker->numberBetween(1, 10),
-            'comment' => $this->faker->optional()->word(),
+            'product_id' => Product::factory(),
+            'user_id' => User::factory(),
+            'type' => 'in',
+            'quantity' => 10,
+            'stock_after' => 10,
+            'comment' => 'Factory movement',
         ];
     }
 }

@@ -95,3 +95,12 @@ it('redirects guests to login and records nothing', function () {
 
     $this->assertDatabaseCount('stock_movements', 0);
 });
+
+it('builds a coherent movement with the factory', function () {
+    $movement = \App\Models\StockMovement::factory()->create();
+
+    expect($movement->type)->toBe('in');
+    expect($movement->quantity)->toBe($movement->stock_after);
+    expect($movement->product)->not->toBeNull();
+    expect($movement->user)->not->toBeNull();
+});
