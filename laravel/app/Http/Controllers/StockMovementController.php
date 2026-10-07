@@ -164,7 +164,7 @@ class StockMovementController extends Controller
         fprintf($out, chr(0xEF).chr(0xBB).chr(0xBF));
 
         // CSV headers
-        fputcsv($out, ['date', 'product', 'type', 'quantity', 'comment']);
+        fputcsv($out, ['date', 'product', 'type', 'quantity', 'stock_after', 'comment']);
 
         $query->orderBy($sort, $dir)
             ->chunk(500, function ($rows) use ($out) {
@@ -174,6 +174,7 @@ class StockMovementController extends Controller
                         $m->product->name,
                         $m->type,
                         $m->quantity,
+                        $m->stock_after,
                         $m->comment ?? '',
                     ]);
                 }
